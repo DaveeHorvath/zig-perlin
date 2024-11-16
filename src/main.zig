@@ -3,8 +3,17 @@ const std = @import("std");
 const Vec2 = struct { x: f32, y: f32 };
 
 pub fn main() !void {
-    const chars = [_]u8{ '0', '1', '2', '3', '4', '5', '6', '7' };
-
+    const chars = [_]*const [3:0]u8{
+        "000",
+        "032",
+        "064",
+        "096",
+        "128",
+        "160",
+        "192",
+        "224",
+        "255",
+    };
     const size: i32 = 50;
     const step: f32 = 0.01;
     var offsetX: f32 = 0;
@@ -18,13 +27,13 @@ pub fn main() !void {
         while (y < size * step) {
             var x: f32 = 0;
             while (x < size * step) {
-                std.debug.print("{c} ", .{chars[@as(u32, @intFromFloat(perlin(x + offsetX, y + offsetY) * 8))]});
+                std.debug.print("\x1B[38;2;{0s};0;{0s}m# ", .{chars[@as(u32, @intFromFloat(perlin(x + offsetX, y + offsetY) * chars.len))]});
                 x += step;
             }
             std.debug.print("\n", .{});
             y += step;
         }
-        std.time.sleep(1e8);
+        std.time.sleep(2e8);
     }
 }
 
