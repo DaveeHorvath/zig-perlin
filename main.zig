@@ -69,9 +69,14 @@ pub fn perlin(x: f32, y: f32) f32 {
     const dx: f32 = x - @as(f32, @floatFromInt(x0));
     const dy: f32 = y - @as(f32, @floatFromInt(y0));
 
+    const topLeftDot: f32 = getDotFromVector(getGridVector(x0, y0, seed), dx, dy);
+    const topRightDot: f32 = getDotFromVector(getGridVector(x0 + 1, y0, seed), 1 - dx, dy);
+    const btmLeftDot: f32 = getDotFromVector(getGridVector(x0, y0 + 1, seed), dx, 1 - dy);
+    const btmRightDot: f32 = getDotFromVector(getGridVector(x0 + 1, y0 + 1, seed), 1 - dx, 1 - dy);
+
     // x direction interpolations
-    const ix0: f32 = interploate(getDotFromVector(getGridVector(x0, y0, seed), dx, dy), getDotFromVector(getGridVector(x0 + 1, y0, seed), 1 - dx, dy), dx);
-    const ix1: f32 = interploate(getDotFromVector(getGridVector(x0, y0 + 1, seed), dx, 1 - dy), getDotFromVector(getGridVector(x0 + 1, y0 + 1, seed), 1 - dx, 1 - dy), dx);
+    const ix0: f32 = interploate(topLeftDot, topRightDot, dx);
+    const ix1: f32 = interploate(btmLeftDot, btmRightDot, dx);
 
     // y direction interpolation
     return interploate(ix0, ix1, dy);
