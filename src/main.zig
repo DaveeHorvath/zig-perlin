@@ -27,7 +27,7 @@ pub fn main() !void {
         while (y < size * step) {
             var x: f32 = 0;
             while (x < size * step) {
-                std.debug.print("\x1B[38;2;{0s};0;{0s}m# ", .{chars[@as(u32, @intFromFloat(perlin(x + offsetX, y + offsetY) * chars.len))]});
+                std.debug.print("\x1B[38;2;{0s};0;{0s}m■ ", .{chars[@as(u32, @intFromFloat(perlin(x + offsetX, y + offsetY) * chars.len))]});
                 x += step;
             }
             std.debug.print("\n", .{});
